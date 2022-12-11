@@ -1,25 +1,49 @@
 package com.driver;
 
 public class Pizza {
-
+    
     private int price;
     private Boolean isVeg;
     private String bill;
-    private int base, cheese, toppings, paperBag;
+
+    //Prices of extra add-Ons
+    private int  extraCheesePrice;
+    private int extraToppingPrice;
+    private int takeAwayPrice;
+
+    //To check the particular add-Ons added
+    private boolean isCheeseAdded;
+    private boolean isToppingAdded;
+    private boolean isPaperBagAdded;
+    private boolean isBillGenerated;
+
 
     public Pizza(Boolean isVeg){
+
+        //Initialising the variables
+        isCheeseAdded = false;
+        isToppingAdded = false;
+        isPaperBagAdded = false;
+        isBillGenerated = false;
+
+        extraCheesePrice = 80;
+        takeAwayPrice = 20;
+
         this.isVeg = isVeg;
-        cheese = 0;
-        toppings = 0;
-        paperBag = 0;
-        if(isVeg) {
-            base = 300;
-            price = base;
+
+        //Toppings prices changes with isVeg option
+        if(isVeg==true){
+            price = 300;
+            extraToppingPrice = 70;
+
         }
-        else {
-            base = 400;
-            price = base;
+        else{
+            price = 400;
+            extraToppingPrice = 120;
         }
+
+        bill = "Base Price Of The Pizza: "+price + "\n";
+
     }
 
     public int getPrice(){
@@ -27,46 +51,47 @@ public class Pizza {
     }
 
     public void addExtraCheese(){
-        if(cheese>0) return;
-        cheese += 80;
-        price += cheese;
+
+        if(isCheeseAdded==false){
+
+            price = price + extraCheesePrice;
+            isCheeseAdded = true; //I dont want it to be added repeatedly
+        }
     }
 
     public void addExtraToppings(){
-        if(toppings>0) return;
-        if(isVeg) {
-            toppings += 70;
-            price += toppings;
-        }
-        else {
-            toppings += 120;
-            price += toppings;
+
+        if(isToppingAdded==false){
+            price += extraToppingPrice;
+            isToppingAdded = true;
         }
     }
 
     public void addTakeaway(){
-        if(paperBag>0) return;
-        paperBag += 20;
-        price += paperBag;
+
+        if(isPaperBagAdded==false){
+            price += takeAwayPrice;
+            isPaperBagAdded = true;
+        }
     }
 
     public String getBill(){
-        String basePrice  = "Base Price Of The Pizza: "+base;
-        String cheesePrice = "Extra Cheese Added: "+cheese;
-        String toppingsPrice = "Extra Toppings Added: "+toppings;
-        String paperPrice = "Paperbag Added: "+paperBag;
-        String totalPrice = "Total Price: "+price;
-        if(cheese>0&&toppings>0&&paperBag>0) {
-            return basePrice+'\n'+cheesePrice+'\n'+toppingsPrice+'\n'+paperPrice+'\n'+totalPrice;
+
+        if(isBillGenerated==false) {
+
+            isBillGenerated = true;
+
+            if (isCheeseAdded == true) {
+                bill += "Extra Cheese Added: " + extraCheesePrice + "\n";
+            }
+            if (isToppingAdded == true) {
+                bill += "Extra Toppings Added: " + extraToppingPrice + "\n";
+            }
+            if (isPaperBagAdded == true) {
+                bill += "Paperbag Added: " + takeAwayPrice + "\n";
+            }
+            bill += "Total Price: "+ price + "\n";
         }
-        else if(cheese>0&&toppings>0) {
-            return basePrice+'\n'+cheesePrice+'\n'+toppingsPrice+'\n'+totalPrice;
-        }
-        else if(toppings>0&&paperBag>0) {
-            return basePrice+'\n'+toppingsPrice+'\n'+paperPrice+'\n'+totalPrice;
-        }
-        else {
-            return basePrice+'\n'+cheesePrice+'\n'+paperPrice+'\n'+totalPrice;
-        }
+        return bill;
     }
 }
