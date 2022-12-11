@@ -55,7 +55,7 @@ public class Pizza {
         if(isCheeseAdded==false){
 
             price = price + extraCheesePrice;
-            isCheeseAdded = true; //I dont want it to be added repeatedly
+            isCheeseAdded = true; //To avoid adding multiple times
         }
     }
 
@@ -63,7 +63,7 @@ public class Pizza {
 
         if(isToppingAdded==false){
             price += extraToppingPrice;
-            isToppingAdded = true;
+            isToppingAdded = true;  //To avoid adding multiple times
         }
     }
 
@@ -71,7 +71,7 @@ public class Pizza {
 
         if(isPaperBagAdded==false){
             price += takeAwayPrice;
-            isPaperBagAdded = true;
+            isPaperBagAdded = true; //To avoid adding multiple times
         }
     }
 
@@ -79,7 +79,7 @@ public class Pizza {
 
         if(isBillGenerated==false) {
 
-            isBillGenerated = true;
+            isBillGenerated = true; //To avoid billing multiple times
 
             if (isCheeseAdded == true) {
                 bill += "Extra Cheese Added: " + extraCheesePrice + "\n";
